@@ -11,7 +11,7 @@ var io = require('socket.io')(http);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
+var games = require('./routes/games');
 
 
 // view engine setup
@@ -28,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/games', games);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -65,7 +66,13 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
+  socket.on('chat message', function(msg){
+    console.log('message: ' + msg);
+  });
   console.log('a user connected');
+  socket.on('disconnect', function(){
+      console.log('user disconnected');
+  });
 });
 
 http.listen(3000, function(){
