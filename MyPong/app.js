@@ -1,8 +1,6 @@
-// var app = require('express')();
-
-
 
 var express = require('express');
+var app = express();
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -14,7 +12,7 @@ var io = require('socket.io')(http);
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
-var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -62,10 +60,12 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
-
 app.get('/', function(req, res){
   res.send('<h1>Hello world</h1>');
+});
+
+io.on('connection', function(socket){
+  console.log('a user connected');
 });
 
 http.listen(3000, function(){
