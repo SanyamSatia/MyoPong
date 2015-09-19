@@ -1,5 +1,6 @@
 var playerSide = "right";
 var oppSide = "left";
+var myname = null;
 
 $(document).mousemove(function(e){
     $("#playerPaddle").css({left:e.pageX, top:e.pageY});
@@ -17,6 +18,13 @@ socket.on('ballLoc', function(loc){
 
 socket.on('opponentPaddleLoc', function(loc) {
 	$("#opponentPaddleLoc").offset(loc);
+});
+
+socket.on('newUser', function(username) {
+    console.log(username); 
+    if(myname == null) {
+        myname = username;
+    }
 });
 
 var intervalID = setInterval(sendPaddleLoc, 100);

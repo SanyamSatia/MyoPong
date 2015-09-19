@@ -15,7 +15,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var games = require('./routes/games');
 
-var users_list = [];
+var users_list = new Array(2);
 
 
 // view engine setup
@@ -71,26 +71,36 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
   var new_user = randomstring.generate(7);
-  console.log('a user ' + '\'' + new_user + '\'' + ' connected');
-  
-  // make a random username
-  users_list.push(new_user);
     
-  //TODO: send user name to client to use for identification
+  //TODO: limit to 2 users max
+  if(users_list.length < 2) {
+    console.log('a user ' + '\'' + new_user + '\'' + ' connected');
+      
+    // make a random username
+    users_list.push(new_user);
+    // send the user name to the use that just logged on??
+    //TODO: send user name to client to use for identification
+    io.emit('newUser', new_user);
+    
+    
+  }
+  
+  
     
   socket.on('chat message', function(msg){
     console.log('message: ' + msg);
     io.emit('chat message', msg);
   });
+    
   socket.on('paddleLoc', function(msg){
     console.log('paddleLoc: ' + msg);
-    io.emit('paddleLoc', msg);
+    io.emit('opponentPaddleLoc', msg);
   });
     
   // will probably require the client to send the user ID for every call
   socket.on('disconnect', function(){
     var old_user = users_list.pop(new_user);
-    console.log('user ' + '\'' + old_user + '\'' + ' disconnected');
+    console.log('user ' + '\'' + new_user + '\'' + ' disconnected');
     
   });
 });

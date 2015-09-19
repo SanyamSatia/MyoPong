@@ -16,6 +16,7 @@
     "parseuri": "0.0.4",
     "randomstring": "^1.1.0",
     "serve-favicon": "~2.3.0",
-    "socket.io": "^1.3.6"
+    "socket.io": "^1.3.6",
+    "socket.io.users": "^2.0.2"
   }
 }
