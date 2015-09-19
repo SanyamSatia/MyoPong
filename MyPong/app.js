@@ -9,9 +9,13 @@ var bodyParser = require('body-parser');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+var randomstring = require("randomstring");
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var games = require('./routes/games');
+
+var users_list = [];
 
 
 // view engine setup
@@ -66,17 +70,33 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
+  var new_user = randomstring.generate(7);
+  console.log('a user ' + '\'' + new_user + '\'' + ' connected');
+  
+  // make a random username
+  users_list.push(new_user);
+    
+  //TODO: send user name to client to use for identification
+    
   socket.on('chat message', function(msg){
     console.log('message: ' + msg);
+    io.emit('chat message', msg);
   });
-  console.log('a user connected');
+  socket.on('paddleLoc', function(msg){
+    console.log('paddleLoc: ' + msg);
+    io.emit('paddleLoc', msg);
+  });
+    
+  // will probably require the client to send the user ID for every call
   socket.on('disconnect', function(){
-      console.log('user disconnected');
+    var old_user = users_list.pop(new_user);
+    console.log('user ' + '\'' + old_user + '\'' + ' disconnected');
+    
   });
 });
 
-http.listen(3000, function(){
-  console.log('listening on *:3000');
+http.listen(8080, function(){
+  console.log('listening on *:8080');
 });
 
 module.exports = app;
