@@ -17,3 +17,22 @@
     height:100%;
     background-color: red;
 }
+
+#playerPaddle {
+    position: absolute;
+    width: 50px;
+    height:50px;
+}
+
+#opponentPaddle {
+    position: absolute;
+    width: 50px;
+    height:50px;
+}
+
+#ball {
+    position: absolute;
+    width: 30px;
+    height:30px;
+    z-index: 10;
+}
