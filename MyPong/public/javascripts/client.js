@@ -1,8 +1,11 @@
 var playerSide = "right";
 var oppSide = "left";
+var inside = true;
 
-$(document).mousemove(function(e){
-    $("#playerPaddle").css({left:e.pageX, top:e.pageY});
+$( document ).ready(function() {
+	$("#"+playerSide).mousemove(function(e){
+		$("#playerPaddle").css({left:e.pageX, top:e.pageY});
+	});
 });
 
 var socket = io();
