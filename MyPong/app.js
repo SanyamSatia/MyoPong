@@ -9,6 +9,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
