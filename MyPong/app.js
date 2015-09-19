@@ -61,7 +61,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.get('/', function(req, res){
-  res.send('<h1>Hello world</h1>');
+  res.send(__dirname + 'index.html');
 });
 
 io.on('connection', function(socket){
