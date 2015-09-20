@@ -108,7 +108,7 @@ var leftBound = 0;
 var rightBound = 1024;
 var lastToHit = null;
 
-var checkBounds(ball, io) {
+var checkBounds = function(ball, io) {
   if(ball.xPos < leftBound || ball.xPos > rightBound) {
     //TODO: emit ball out of bounds therefore reset
     io.emit('outOfBounds');
