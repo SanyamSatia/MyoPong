@@ -2,6 +2,8 @@
 var myname = null;
 
 var playerSide, oppSide;
+var hitBool = false;
+var updateHitBoolInterval;
 playerNumber = document.cookie;
 
 if(playerNumber == "1") {
@@ -40,17 +42,26 @@ function checkHit() {
 	var paddletr = { top: paddletl.top, left: paddlebr.left};
 	
 	if(playerSide == "left") {
-		if(ballbl.left < paddletr.left && ballbl.top > paddletr.top && balltr.top<paddlebl.top) {
+		if(ballbl.left < paddletr.left && ballbl.top > paddletr.top && balltr.top<paddlebl.top && !hitBool) {
 				socket.emit('ballHit', true);
+				hitBool = true;
+				updateHitBoolInterval = setInterval(updateHitBool, 500);
 		}
 	}
 
 	else {
-		if(ballbr.left > paddletl.left && ballbr.top > paddletl.top && balltr.top<paddlebl.top) {
+		if(ballbr.left > paddletl.left && ballbr.top > paddletl.top && balltr.top<paddlebl.top && !hitBool) {
 				socket.emit('ballHit', true);
+				hitBool = true;
+				updateHitBoolInterval = setInterval(updateHitBool, 500);
 		}
 	}
 	
+}
+
+function updateHitBool() {
+	hitBool = false;
+	clearInterval(updateHitBoolInterval);
 }
 
 socket.on('ballLoc', function(loc) {
