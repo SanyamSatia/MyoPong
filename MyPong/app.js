@@ -189,7 +189,9 @@ io.on('connection', function(socket){
   //playerID - string that identifies the player who is ending paddle location
   socket.on('paddleLoc', function(data){
     console.log('paddleLoc: (' + data.paddleLoc.left + ', ' + data.paddleLoc.top + ')');
-    io.emit('opponentPaddleLoc', data + ':' + data.id); //if client player id no match, it updates enemy paddle loc
+    io.emit('opponentPaddleLoc', {'id': data.id, 'paddleLoc':{
+        'left': data.paddleLoc.left, 
+        'top': data.paddleLoc.top}}); //if client player id no match, it updates enemy paddle loc
   });
     
   socket.on('ballHit', function(angle, playerID){
