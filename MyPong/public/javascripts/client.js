@@ -72,16 +72,12 @@ socket.on('ballLoc', function(loc) {
 	$("#ball").offset(loc);
 });
 
-socket.on('opponentPaddleLoc', function(loc) {
-	$("#opponentPaddleLoc").offset(loc);
-});
-
-socket.on('newUser', function(username) {
-    console.log(username); 
-    if(myname == null) {
-      myname = username;
+socket.on('opponentPaddleLoc', function(data) {
+    if(data.id !== document.cookie){
+	   $("#opponentPaddleLoc").offset(data.paddleLoc);
     }
 });
+
 
 var sendPaddleLocInterval = setInterval(sendPaddleLoc, 100);
 var checkPaddleHitInterval = setInterval(checkHit, 100);

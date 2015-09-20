@@ -102,19 +102,18 @@ var updateBallInfo = function(ball) {
 /**
  * Board physics goes here
  */
-var lowerBound = 0;
-var upperBound = 768;
+var lowerBound = 768;
+var upperBound = 0;
 var leftBound = 0;
 var rightBound = 1024;
 var lastToHit = null;
 
 var checkBounds = function(ball, io) {
   if(ball.xPos < leftBound || ball.xPos > rightBound) {
-    //TODO: emit ball out of bounds therefore reset
     io.emit('outOfBounds');
     resetBall(ball);
   }
-  else if(ball.yPos > upperBound || ball.yPos < lowerBound) {
+  else if(ball.yPos < upperBound || ball.yPos > lowerBound) {
     ball.yVel = (ball.yVel * -1);
   }
 }
@@ -122,7 +121,7 @@ var checkBounds = function(ball, io) {
 //1024 * 768
 //every 35 ms update the x and y coords by 1 or 2 pixels
 //ball is 48 * 48 px
-//Define location (0, 0) to be bottom left
+//Define location (0, 0) to be top left
 
 
 
@@ -142,9 +141,6 @@ var check_ready = function(p1, p2) {
 }
 
 
-
-
-
 io.on('connection', function(socket){
   var new_user = randomstring.generate(7);
     
@@ -160,11 +156,17 @@ io.on('connection', function(socket){
 //    
 //  }
   
-  socket.on('player1Select', function(msg){
-    console.log('Player 1 ready!');
-    io.emit('player1Taken');
-    player1_ready = true;
-    user_list[0] = socket; //TODO: what do we want to save to this list??
+  socket.on('player', function(playerNumber){
+    console.log('Player ' + playerNumber +' ready!');
+    io.emit('playerTaken', playerNumber);
+    if(playerNumber == 1) {
+      player1_ready = true;
+      user_list[0] = socket; //TODO: what do we want to save to this list??
+    }
+    else if(playerNumber == 2) {
+      player2_ready = true;
+        users_list[1] = socket;
+    }
     check_ready(player1_ready, player2_ready);
   });
     
@@ -182,16 +184,13 @@ io.on('connection', function(socket){
   });
     
   //playerID - string that identifies the player who is ending paddle location
-  socket.on('paddleLoc', function(loc, playerID){
-    console.log('paddleLoc: ' + loc);
-    io.emit('opponentPaddleLoc', loc + ':' + playerID); //if client player id no match, it updates enemy paddle loc
+  socket.on('paddleLoc', function(data){
+    console.log('paddleLoc: (' + data.paddleLoc.left + ', ' + data.paddleLoc.top + ')');
+    io.emit('opponentPaddleLoc', data + ':' + data.id); //if client player id no match, it updates enemy paddle loc
   });
     
-  socket.on('hitPaddle', function(angle, playerID){
+  socket.on('ballHit', function(angle, playerID){
     lastToHit = playerID;
-    //TODO: do reflection stuff here
-    //if we hit top or bottom, xVel same, yVel opposite
-      
     //if we hit left or right, yVel same, xVel opposite
     ball.xVel = (ball.xVel * -1);
     
