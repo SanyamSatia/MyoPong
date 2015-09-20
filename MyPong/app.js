@@ -157,7 +157,7 @@ io.on('connection', function(socket){
   // will probably require the client to send the user ID for every call
   socket.on('disconnect', function(){
     var user_index = users_list.indexOf(socket);
-    user_index.pop(socket);
+    users_list.pop(socket);
     if(user_index == 0) {
       new_user = 'Player 1';   
     }
