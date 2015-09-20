@@ -1,3 +1,6 @@
+
+var myname = null;
+
 var playerSide, oppSide;
 playerNumber = document.cookie;
 
@@ -71,6 +74,13 @@ socket.on('ballLoc', function(loc) {
 
 socket.on('opponentPaddleLoc', function(loc) {
 	$("#opponentPaddleLoc").offset(loc);
+});
+
+socket.on('newUser', function(username) {
+    console.log(username); 
+    if(myname == null) {
+      myname = username;
+    }
 });
 
 var sendPaddleLocInterval = setInterval(sendPaddleLoc, 100);

@@ -18,6 +18,13 @@ html
       return false;
       });
 
+      socket.on('chat message', function(msg){
+        $('#messages').append($('<li>').text(msg));
+      });
+      socket.on('newUser', function(username) {
+        console.log(username); 
+      });
+
     img#logoimg(src='/images/logo.png')
 
     div#playercontainer
@@ -26,3 +33,4 @@ html
         a(href='#') Player 1
       div#player2
         a(href='#') Player 2
+
