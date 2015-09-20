@@ -72,9 +72,12 @@ socket.on('ballLoc', function(loc) {
 	$("#ball").offset(loc);
 });
 
-socket.on('opponentPaddleLoc', function(data) {
-    if(data.id !== document.cookie){
-	   $("#opponentPaddleLoc").offset(data.paddleLoc);
+socket.on('opponentPaddleLoc', function(loc) {
+	if(loc.id != playerNumber) {
+		$("#opponentPaddleLoc").offset(loc.paddleLoc);
+	}
+});
+
     }
 });
 
