@@ -89,13 +89,14 @@ var resetBall = function(ball) {
   ball.yVel = 1;
   ball.xVel = 1;
   ball.direction = 0;
-  updateBallInfo(ball);
+  updateBallInfo();
 }
 
-var updateBallInfo = function(ball) {
+var updateBallInfo = function() {
+//  console.log('called updateBallInfo');
   ball.xPos = ball.xPos + (2 * ball.xVel); //change xpos by 2 pixels
   ball.yPos = ball.yPos + (2 * ball.yVel); //change ypos by 2 pixels
-  io.emit('ballUpdate', ball);
+  io.emit('ballLoc', {'left': ball.xPos, 'top': ball.yPos});
   checkBounds(ball, io);
 }
 
@@ -135,7 +136,8 @@ var player2_ready = false;
 //should also start the game itself
 var check_ready = function(p1, p2) {
   if(player1_ready && player2_ready) {
-    io.emit('startBall', ball);
+    console.log('both ready');
+    io.emit('ballLoc', {'left': ball.xPos, 'top': ball.yPos});
     var sendBallLocInterval = setInterval(updateBallInfo, 35);
   }
 }
@@ -161,7 +163,7 @@ io.on('connection', function(socket){
     io.emit('playerTaken', playerNumber);
     if(playerNumber == 1) {
       player1_ready = true;
-      user_list[0] = socket; //TODO: what do we want to save to this list??
+      users_list[0] = socket; //TODO: what do we want to save to this list??
     }
     else if(playerNumber == 2) {
       player2_ready = true;
@@ -170,13 +172,13 @@ io.on('connection', function(socket){
     check_ready(player1_ready, player2_ready);
   });
     
-  socket.on('player2Select', function(msg){
-    console.log('Player 2 ready!');
-    io.emit('player2Taken');
-    player2_ready = true;
-    user_list[1] = socket; //TODO: what do we really want to save to this list?
-    check_ready(player1_ready, player2_ready);
-  });
+//  socket.on('player2Select', function(msg){
+//    console.log('Player 2 ready!');
+//    io.emit('player2Taken');
+//    player2_ready = true;
+//    user_list[1] = socket; //TODO: what do we really want to save to this list?
+//    check_ready(player1_ready, player2_ready);
+//  });
     
   socket.on('chat message', function(msg){
     console.log('message: ' + msg);
