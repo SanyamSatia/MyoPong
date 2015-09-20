@@ -78,9 +78,5 @@ socket.on('opponentPaddleLoc', function(loc) {
 	}
 });
 
-    }
-});
-
-
 var sendPaddleLocInterval = setInterval(sendPaddleLoc, 100);
 var checkPaddleHitInterval = setInterval(checkHit, 100);
