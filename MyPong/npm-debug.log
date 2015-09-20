@@ -1,69 +1,27 @@
 0 info it worked if it ends with ok
-1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'install', 'socket-io' ]
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'start' ]
 2 info using npm@1.4.28
 3 info using node@v0.10.40
 4 verbose node symlink /usr/bin/node
-5 verbose readDependencies using package.json deps
-6 verbose cache add [ 'socket-io', null ]
-7 verbose cache add name=undefined spec="socket-io" args=["socket-io",null]
-8 verbose parsed url { protocol: null,
-8 verbose parsed url   slashes: null,
-8 verbose parsed url   auth: null,
-8 verbose parsed url   host: null,
-8 verbose parsed url   port: null,
-8 verbose parsed url   hostname: null,
-8 verbose parsed url   hash: null,
-8 verbose parsed url   search: null,
-8 verbose parsed url   query: null,
-8 verbose parsed url   pathname: 'socket-io',
-8 verbose parsed url   path: 'socket-io',
-8 verbose parsed url   href: 'socket-io' }
-9 silly lockFile 2c2f14e9-socket-io socket-io
-10 verbose lock socket-io /home/ulloac/.npm/2c2f14e9-socket-io.lock
-11 silly lockFile 2c2f14e9-socket-io socket-io
-12 silly lockFile 2c2f14e9-socket-io socket-io
-13 verbose addNamed [ 'socket-io', '' ]
-14 verbose addNamed [ null, '*' ]
-15 silly lockFile d2f5c91d-socket-io socket-io@
-16 verbose lock socket-io@ /home/ulloac/.npm/d2f5c91d-socket-io.lock
-17 silly addNameRange { name: 'socket-io', range: '*', hasData: false }
-18 verbose request where is /socket-io
-19 verbose request registry https://registry.npmjs.org/
-20 verbose request id 7c0fa5dd91ab4551
-21 verbose url raw /socket-io
-22 verbose url resolving [ 'https://registry.npmjs.org/', './socket-io' ]
-23 verbose url resolved https://registry.npmjs.org/socket-io
-24 verbose request where is https://registry.npmjs.org/socket-io
-25 info trying registry request attempt 1 at 14:27:17
-26 http GET https://registry.npmjs.org/socket-io
-27 http 404 https://registry.npmjs.org/socket-io
-28 silly registry.get cb [ 404,
-28 silly registry.get   { 'content-type': 'application/json',
-28 silly registry.get     'cache-control': 'max-age=0',
-28 silly registry.get     'content-length': '2',
-28 silly registry.get     'accept-ranges': 'bytes',
-28 silly registry.get     date: 'Sat, 19 Sep 2015 18:27:17 GMT',
-28 silly registry.get     via: '1.1 varnish',
-28 silly registry.get     age: '0',
-28 silly registry.get     connection: 'keep-alive',
-28 silly registry.get     'x-served-by': 'cache-atl6227-ATL',
-28 silly registry.get     'x-cache': 'MISS',
-28 silly registry.get     'x-cache-hits': '0',
-28 silly registry.get     'x-timer': 'S1442687237.297547,VS0,VE407' } ]
-29 silly lockFile d2f5c91d-socket-io socket-io@
-30 silly lockFile d2f5c91d-socket-io socket-io@
-31 error 404 Not Found
-31 error 404
-31 error 404 'socket-io' is not in the npm registry.
-31 error 404 You should bug the author to publish it
-31 error 404 It was specified as a dependency of 'MyPong'
-31 error 404
-31 error 404 Note that you can also install from a
-31 error 404 tarball, folder, or http url, or git url.
-32 error System Linux 3.16.0-38-generic
-33 error command "/usr/bin/node" "/usr/bin/npm" "install" "socket-io"
-34 error cwd /home/ulloac/Documents/Dropbox/BigRedHacks/2015/myo/Chalk/MyPong
-35 error node -v v0.10.40
-36 error npm -v 1.4.28
-37 error code E404
-38 verbose exit [ 1, true ]
+5 verbose run-script [ 'prestart', 'start', 'poststart' ]
+6 info prestart MyPong@0.0.1
+7 info start MyPong@0.0.1
+8 verbose unsafe-perm in lifecycle true
+9 info MyPong@0.0.1 Failed to exec start script
+10 error MyPong@0.0.1 start: `node ./bin/www`
+10 error Exit status 8
+11 error Failed at the MyPong@0.0.1 start script.
+11 error This is most likely a problem with the MyPong package,
+11 error not with npm itself.
+11 error Tell the author that this fails on your system:
+11 error     node ./bin/www
+11 error You can get their info via:
+11 error     npm owner ls MyPong
+11 error There is likely additional logging output above.
+12 error System Linux 3.16.0-38-generic
+13 error command "/usr/bin/node" "/usr/bin/npm" "start"
+14 error cwd /home/ulloac/Documents/Dropbox/BigRedHacks/2015/myo/Chalk/MyPong
+15 error node -v v0.10.40
+16 error npm -v 1.4.28
+17 error code ELIFECYCLE
+18 verbose exit [ 1, true ]
