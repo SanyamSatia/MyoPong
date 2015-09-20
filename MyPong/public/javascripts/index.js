@@ -18,4 +18,7 @@ $( document ).ready(function() {
 			$("#player2").hide();
 		}
 	});
+	socket.on('startGame', function() {
+		window.location.replace("./games");
+	});
 });

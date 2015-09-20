@@ -23,7 +23,7 @@ $( document ).ready(function() {
 var socket = io();
 
 function sendPaddleLoc() {
-    socket.emit('paddleLoc',$("#" + playerSide + "Paddle").offset());
+    socket.emit('paddleLoc',{id: playerNumber, paddleLoc: $("#" + playerSide + "Paddle").offset()});
 }
 
 function checkHit() {

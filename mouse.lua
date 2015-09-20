@@ -2,19 +2,13 @@ scriptId = 'com.thalmic.examples.outputeverything'
 scriptTitle = "Output Everything"
 scriptDetailsUrl = "" -- We don't have this until it's submitted to the Myo Market
 
+myo.controlMouse(true)
+
 function onPoseEdge(pose, edge)
     if(pose == "fist" and edge == "on") then
-        myo.controlMouse(true)
-        myo.mouse("left","down")
-    end
-    if(pose == "fist" and edge == "off") then
-        myo.mouse("left","up")
+        myo.mouse("left","click")
     end
     myo.debug("onPoseEdge: " .. pose .. ", " .. edge)
-end
-
-function onUnlock()
-    myo.controlMouse(false)
 end
 
 function onPeriodic()
