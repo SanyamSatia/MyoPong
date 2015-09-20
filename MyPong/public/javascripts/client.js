@@ -45,7 +45,7 @@ function checkHit() {
 		if(ballbl.left < paddletr.left && ballbl.top > paddletr.top && balltr.top<paddlebl.top && !hitBool) {
 				socket.emit('ballHit', true);
 				hitBool = true;
-				updateHitBoolInterval = setInterval(updateHitBool, 500);
+				updateHitBoolInterval = setInterval(updateHitBool, 1000);
 		}
 	}
 
@@ -69,8 +69,9 @@ socket.on('ballLoc', function(loc) {
 });
 
 socket.on('opponentPaddleLoc', function(loc) {
+	//alert(loc.id + " " + loc.paddleLoc.left);
 	if(loc.id != playerNumber) {
-		$("#opponentPaddleLoc").offset(loc.paddleLoc);
+		$("#" + oppSide + "Paddle").offset(loc.paddleLoc);
 	}
 });
 

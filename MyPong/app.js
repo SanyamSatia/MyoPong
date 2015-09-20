@@ -94,8 +94,8 @@ var resetBall = function(ball) {
 
 var updateBallInfo = function() {
 //  console.log('called updateBallInfo');
-  ball.xPos = ball.xPos + (2 * ball.xVel); //change xpos by 2 pixels
-  ball.yPos = ball.yPos + (2 * ball.yVel); //change ypos by 2 pixels
+  ball.xPos = ball.xPos + (7 * ball.xVel); //change xpos by 2 pixels
+  ball.yPos = ball.yPos + (7 * ball.yVel); //change ypos by 2 pixels
   io.emit('ballLoc', {'left': ball.xPos, 'top': ball.yPos});
   checkBounds(ball, io);
 }
@@ -139,7 +139,7 @@ var check_ready = function(p1, p2) {
     console.log('both ready');
     io.emit('startGame');
     io.emit('ballLoc', {'left': ball.xPos, 'top': ball.yPos});
-    var sendBallLocInterval = setInterval(updateBallInfo, 50);
+    var sendBallLocInterval = setInterval(updateBallInfo, 40);
   }
 }
 
@@ -189,9 +189,7 @@ io.on('connection', function(socket){
   //playerID - string that identifies the player who is ending paddle location
   socket.on('paddleLoc', function(data){
     console.log('paddleLoc: (' + data.paddleLoc.left + ', ' + data.paddleLoc.top + ')');
-    io.emit('opponentPaddleLoc', {'id': data.id, 'paddleLoc':{
-        'left': data.paddleLoc.left, 
-        'top': data.paddleLoc.top}}); //if client player id no match, it updates enemy paddle loc
+    io.emit('opponentPaddleLoc', {id: data.id, paddleLoc: data.paddleLoc});
   });
     
   socket.on('ballHit', function(angle, playerID){
