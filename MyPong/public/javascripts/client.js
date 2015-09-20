@@ -29,7 +29,7 @@ function checkHit() {
 		var ballctr = $("#ball").offset().top - ($("#playerPaddle").offset().top - $("#ball").height());
 		alert(ballctr + " " + paddlectr);
 		var angle = (paddlectr - ballctr) * 100 / paddlectr;
-		//alert(angle);
+		alert(angle);
 		socket.emit('ballHit', angle);
 	}
 }
