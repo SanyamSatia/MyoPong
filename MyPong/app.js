@@ -103,10 +103,10 @@ var updateBallInfo = function() {
 /**
  * Board physics goes here
  */
-var lowerBound = 768;
+var lowerBound = 690;
 var upperBound = 0;
 var leftBound = 0;
-var rightBound = 1024;
+var rightBound = 1080;
 var lastToHit = null;
 
 var checkBounds = function(ball, io) {
@@ -139,7 +139,7 @@ var check_ready = function(p1, p2) {
     console.log('both ready');
     io.emit('startGame');
     io.emit('ballLoc', {'left': ball.xPos, 'top': ball.yPos});
-    var sendBallLocInterval = setInterval(updateBallInfo, 35);
+    var sendBallLocInterval = setInterval(updateBallInfo, 50);
   }
 }
 
