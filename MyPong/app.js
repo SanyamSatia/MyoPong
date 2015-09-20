@@ -137,6 +137,7 @@ var player2_ready = false;
 var check_ready = function(p1, p2) {
   if(player1_ready && player2_ready) {
     console.log('both ready');
+    io.emit('startGame');
     io.emit('ballLoc', {'left': ball.xPos, 'top': ball.yPos});
     var sendBallLocInterval = setInterval(updateBallInfo, 35);
   }
