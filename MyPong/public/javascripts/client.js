@@ -73,7 +73,9 @@ socket.on('ballLoc', function(loc) {
 });
 
 socket.on('opponentPaddleLoc', function(loc) {
-	$("#opponentPaddleLoc").offset(loc);
+	if(loc.id != playerNumber) {
+		$("#opponentPaddleLoc").offset(loc.paddleLoc);
+	}
 });
 
 socket.on('newUser', function(username) {
