@@ -78,19 +78,53 @@ app.get('/', function(req, res){
 var ball = {
     'direction': 0, 
     'xVel': 1, 
-    'yvel': 1, 
+    'yVel': 1, 
     'xPos': 1,
     'yPos': 1
 }
 
+var resetBall = function(ball) {
+  ball.xPos = 1;
+  ball.yPos = 1;
+  ball.yVel = 1;
+  ball.xVel = 1;
+  ball.direction = 0;
+  updateBallInfo(ball);
+}
+
+var updateBallInfo = function(ball) {
+  ball.xPos = ball.xPos + (2 * ball.xVel); //change xpos by 2 pixels
+  ball.yPos = ball.yPos + (2 * ball.yVel); //change ypos by 2 pixels
+  io.emit('ballUpdate', ball);
+  checkBounds(ball, io);
+}
+
+/**
+ * Board physics goes here
+ */
+var lowerBound = 0;
+var upperBound = 768;
+var leftBound = 0;
+var rightBound = 1024;
+var lastToHit = null;
+
+var checkBounds(ball, io) {
+  if(ball.xPos < leftBound || ball.xPos > rightBound) {
+    //TODO: emit ball out of bounds therefore reset
+    io.emit('outOfBounds');
+    resetBall(ball);
+  }
+  else if(ball.yPos > upperBound || ball.yPos < lowerBound) {
+    ball.yVel = (ball.yVel * -1);
+  }
+}
 
 //1024 * 768
 //every 35 ms update the x and y coords by 1 or 2 pixels
 //ball is 48 * 48 px
+//Define location (0, 0) to be bottom left
 
-/**
- *
- */
+
 
 
 var users_list = new Array(2);
@@ -103,8 +137,10 @@ var player2_ready = false;
 var check_ready = function(p1, p2) {
   if(player1_ready && player2_ready) {
     io.emit('startBall', ball);
+    var sendBallLocInterval = setInterval(updateBallInfo, 35);
   }
 }
+
 
 
 
@@ -145,12 +181,21 @@ io.on('connection', function(socket){
     io.emit('chat message', msg);
   });
     
-  //player - string that identifies the player who is ending paddle location
+  //playerID - string that identifies the player who is ending paddle location
   socket.on('paddleLoc', function(loc, playerID){
     console.log('paddleLoc: ' + loc);
     io.emit('opponentPaddleLoc', loc + ':' + playerID); //if client player id no match, it updates enemy paddle loc
   });
     
+  socket.on('hitPaddle', function(angle, playerID){
+    lastToHit = playerID;
+    //TODO: do reflection stuff here
+    //if we hit top or bottom, xVel same, yVel opposite
+      
+    //if we hit left or right, yVel same, xVel opposite
+    ball.xVel = (ball.xVel * -1);
+    
+  });
     
   
     
@@ -168,6 +213,8 @@ io.on('connection', function(socket){
     
   });
 });
+
+
 
 http.listen(8080, function(){
   console.log('listening on *:8080');

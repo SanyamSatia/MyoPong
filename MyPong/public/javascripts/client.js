@@ -46,7 +46,7 @@ socket.on('opponentPaddleLoc', function(loc) {
 socket.on('newUser', function(username) {
     console.log(username); 
     if(myname == null) {
-        myname = username;
+      myname = username;
     }
 });
 
